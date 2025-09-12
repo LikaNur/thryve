@@ -6,6 +6,7 @@ import { Instructions } from "./Instructions";
 import { Input } from "../../../../components/ui/input";
 import { Button } from "../../../../components/ui/button";
 
+
 type WelcomePageProps = {
   onStart: (name: string) => void;
 };
@@ -15,7 +16,7 @@ export function WelcomePage({ onStart }: WelcomePageProps) {
   const isInvalid = name.trim().length > 0 && name.trim().length < 4;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[85vh] px-4 pt-40 md:pt-40  gap-6">
+    <div className="flex flex-col items-center justify-center min-h-[85vh] px-4 pt-40 gap-6">
       <header className="text-center">
         <h1 className="text-3xl font-black tracking-wide">WELCOME</h1>
         <div className="flex items-center justify-center gap-2 mt-2">

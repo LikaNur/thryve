@@ -1,28 +1,52 @@
 "use client";
 
 import { useState } from "react";
-import { WelcomePage } from "./features";
+import { GameBoard, ResultBoard, WelcomePage } from "./features";
 import { GameSteps } from "../types/types";
+
 
 export default function HomePage() {
   const [step, setStep] = useState<GameSteps>("welcome");
   const [username, setUsername] = useState("");
+  const [result, setResult] = useState<{ correct: number; errors: number }>({
+    correct: 0,
+    errors: 0,
+  });
 
-  if (step === "welcome")
-    return (
-      <WelcomePage
-        onStart={(name) => {
-          setStep("game");
-          setUsername(name);
-        }}
-      />
-    );
+  switch (step) {
+    case "welcome":
+      return (
+        <WelcomePage
+          onStart={(name) => {
+            setUsername(name);
+            setStep("game");
+          }}
+        />
+      );
+    case "game":
+      return (
+        <GameBoard
+          username={username}
+          onGameOver={(stats) => {
+            setResult(stats);
+            setStep("result");
+          }}
+        />
+      );
 
-  if (step === "game") {
-    return <div>GameBoard Username: {username}</div>;
-  }
-
-  if (step === "result") {
-    return <div>ResultBoard {username}</div>;
+    case "result":
+      return (
+        <div>
+          <ResultBoard
+            username={username}
+            stats={result}
+            onRestart={() => {
+              setStep("welcome");
+            }}
+          />
+        </div>
+      );
+    default:
+      return null;
   }
 }

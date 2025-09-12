@@ -8,8 +8,11 @@ type CardContainerProps = {
 
 export function CardContainer({ children }: CardContainerProps) {
   return (
-    <div className="flex items-center justify-center min-h-[85vh] md:pt-18 mx-4">
-      <div className="p-6 md:p-12 min-h-[12rem] md:min-h-[18rem] max-w-lg w-full">
+    <div className="flex items-center justify-center min-h-[85vh] px-4 pt-40 md:pt-20  gap-6">
+      <div
+        className="
+          w-full max-w-md min-h-[22rem] rounded-xl bg-white/10 backdrop-blur-md p-6 md:p-10 shadow-lg"
+      >
         {children}
       </div>
     </div>
