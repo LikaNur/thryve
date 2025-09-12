@@ -41,7 +41,7 @@ export default function HomePage() {
             username={username}
             stats={result}
             onRestart={() => {
-              setStep("welcome");
+              setStep("game");
             }}
           />
         </div>

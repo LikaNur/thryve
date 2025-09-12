@@ -4,13 +4,13 @@ import { CardContainer } from "@/components";
 import { Stats } from "@/types/types";
 import { Button } from "../../../../components/ui/button";
 
-type ResultBoardProps = {
+type Props = {
   username: string;
   stats: Stats;
   onRestart: () => void;
 };
 
-export function ResultBoard({ username, stats, onRestart }: ResultBoardProps) {
+export function ResultBoard({ username, stats, onRestart }: Props) {
   return (
     <CardContainer>
       <div className="flex flex-col items-center gap-6">

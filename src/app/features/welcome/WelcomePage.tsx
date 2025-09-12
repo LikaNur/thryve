@@ -2,18 +2,16 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Instructions } from "./Instructions";
 import { Input } from "../../../../components/ui/input";
 import { Button } from "../../../../components/ui/button";
 
-
-type WelcomePageProps = {
+type Props = {
   onStart: (name: string) => void;
 };
 
-export function WelcomePage({ onStart }: WelcomePageProps) {
+export function WelcomePage({ onStart }: Props) {
   const [name, setName] = useState("");
-  const isInvalid = name.trim().length > 0 && name.trim().length < 4;
+  const isInvalid = name.length > 0 && name.length < 3;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[85vh] px-4 pt-40 gap-6">
@@ -31,7 +29,29 @@ export function WelcomePage({ onStart }: WelcomePageProps) {
         </div>
       </header>
 
-      <Instructions />
+      <section
+        aria-labelledby="instructions-heading"
+        className="max-w-md text-sm text-left space-y-2"
+      >
+        <h2 id="instructions-heading" className="sr-only">
+          Game Instructions
+        </h2>
+        <p>
+          The 2-back game is a fun memory challenge that trains your focus and
+          working memory. You’ll see a sequence of letters, one at a time.
+        </p>
+        <ul className="list-disc list-inside space-y-1">
+          <li>
+            If the current letter matches the one shown <b>2 steps back</b>,
+            press the button.
+          </li>
+          <li>
+            The game ends after <b>2 mistakes</b> or{" "}
+            <b>when the sequence is complete</b>.
+          </li>
+          <li>Stay focused and aim for the best score!</li>
+        </ul>
+      </section>
 
       <div className="flex flex-col gap-2 w-full max-w-md">
         <label htmlFor="username" className="text-sm">
@@ -44,7 +64,7 @@ export function WelcomePage({ onStart }: WelcomePageProps) {
           minLength={4}
           placeholder="Enter your name here"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setName(e.target.value.trim())}
         />
         {isInvalid && (
           <p className="text-xs text-red-600">
@@ -54,10 +74,10 @@ export function WelcomePage({ onStart }: WelcomePageProps) {
       </div>
 
       <Button
-        onClick={() => onStart(name.trim())}
+        onClick={() => onStart(name)}
         size="lg"
         variant="warning"
-        disabled={name.trim().length < 4}
+        disabled={name.length < 3}
         aria-label="Start game"
       >
         Start
