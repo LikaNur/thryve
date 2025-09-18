@@ -24,7 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${montserrat.className} antialiased`}>
         <Navbar />
-        <main className="relative min-h-[85vh]">{children}</main>
+        <main className="relative  min-h-[85vh] md:min-h-[90vh]">
+          {children}
+        </main>
         <Waves />
       </body>
     </html>

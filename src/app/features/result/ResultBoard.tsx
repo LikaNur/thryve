@@ -17,7 +17,7 @@ export function ResultBoard({ username, stats, onRestart }: Props) {
         <h2 className="text-2xl font-bold">Game Results</h2>
 
         <p className="text-lg">
-          Nice work, <b>{username}</b>!
+          {stats.correct >= 3 ? "Nice work," : "Nice try,"} <b>{username}</b>!
         </p>
 
         <div className="text-center space-y-1">

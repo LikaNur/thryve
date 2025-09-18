@@ -36,14 +36,18 @@ export function GameBoard({ username, onGameOver }: Props) {
   const [index, setIndex] = useState(0);
   const [correct, setCorrect] = useState(0);
   const [errors, setErrors] = useState(0);
+  const [hasClicked, setHasClicked] = useState(false);
 
   function handleMatch() {
     if (index < 2) return;
+    if (hasClicked) return;
+
     if (FIXED_SEQUENCE[index] === FIXED_SEQUENCE[index - 2]) {
       setCorrect((corr) => corr + 1);
     } else {
       setErrors((err) => err + 1);
     }
+    setHasClicked(true);
   }
 
   useEffect(() => {
@@ -52,7 +56,11 @@ export function GameBoard({ username, onGameOver }: Props) {
       return;
     }
 
-    const timer = setTimeout(() => setIndex((idx) => idx + 1), TICK_MS);
+    const timer = setTimeout(() => {
+      setIndex((idx) => idx + 1);
+      setHasClicked(false);
+    }, TICK_MS);
+
     return () => clearTimeout(timer);
   }, [index, errors, onGameOver, correct]);
 
@@ -72,6 +80,7 @@ export function GameBoard({ username, onGameOver }: Props) {
           size="lg"
           variant="outline"
           aria-label="Match letters"
+          disabled={hasClicked || index < 2}
         >
           Match
         </Button>
