@@ -3,14 +3,14 @@
 import Image from "next/image";
 import { Input } from "../../../../components/ui/input";
 import { Button } from "../../../../components/ui/button";
-import { useGame } from "@/context/GameContext";
+import { useGameContext } from "@/context/GameContext";
 
 type Props = {
   onStart: (name: string) => void;
 };
 
 export function WelcomePage({ onStart }: Props) {
-  const { username, setUsername } = useGame();
+  const { username, setUsername } = useGameContext();
   const isInvalid = username.length > 0 && username.length < 3;
 
   return (

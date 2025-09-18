@@ -3,10 +3,10 @@
 import { useState } from "react";
 import { GameBoard, ResultBoard, WelcomePage } from "./features";
 import { GameSteps } from "../types/types";
-import { useGame } from "@/context/GameContext";
+import { useGameContext } from "@/context/GameContext";
 
 export default function HomePage() {
-  const { setUsername, setStats } = useGame();
+  const { setUsername, setStats } = useGameContext();
   const [step, setStep] = useState<GameSteps>("welcome");
 
   switch (step) {

@@ -3,7 +3,7 @@
 import { CardContainer } from "@/components";
 import { Button } from "../../../../components/ui/button";
 import { useEffect, useState } from "react";
-import { useGame } from "@/context/GameContext";
+import { useGameContext } from "@/context/GameContext";
 import { Stats } from "@/types/types";
 import { FIXED_SEQUENCE, MAX_ERRORS, TICK_MS, TOTAL } from "./constants";
 
@@ -12,7 +12,7 @@ type Props = {
 };
 
 export function GameBoard({ onGameOver }: Props) {
-  const { username, stats, setStats } = useGame();
+  const { username, stats, setStats } = useGameContext();
   const [index, setIndex] = useState(0);
   const [hasClicked, setHasClicked] = useState(false);
 

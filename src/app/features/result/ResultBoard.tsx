@@ -2,14 +2,14 @@
 
 import { CardContainer } from "@/components";
 import { Button } from "../../../../components/ui/button";
-import { useGame } from "@/context/GameContext";
+import { useGameContext } from "@/context/GameContext";
 
 type Props = {
   onRestart: () => void;
 };
 
 export function ResultBoard({ onRestart }: Props) {
-  const { username, stats } = useGame();
+  const { username, stats } = useGameContext();
 
   return (
     <CardContainer>
