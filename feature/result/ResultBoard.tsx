@@ -1,7 +1,7 @@
 "use client";
 
-import { CardContainer } from "@/components";
-import { Button } from "../../../../components/ui/button";
+import { CardContainer } from "@/components/layout";
+import { Button } from "@/components/ui";
 import { useGameContext } from "@/context/GameContext";
 
 type Props = {

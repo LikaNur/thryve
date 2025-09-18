@@ -1,15 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import { Input } from "../../../../components/ui/input";
-import { Button } from "../../../../components/ui/button";
+import { Button, Input } from "@/components/ui";
 import { useGameContext } from "@/context/GameContext";
+import Image from "next/image";
 
 type Props = {
   onStart: (name: string) => void;
 };
 
-export function WelcomePage({ onStart }: Props) {
+export function WelcomeView({ onStart }: Props) {
   const { username, setUsername } = useGameContext();
   const isInvalid = username.length > 0 && username.length < 3;
 

@@ -1,11 +1,11 @@
 "use client";
 
-import { CardContainer } from "@/components";
-import { Button } from "../../../../components/ui/button";
 import { useEffect, useState } from "react";
-import { useGameContext } from "@/context/GameContext";
-import { Stats } from "@/types/types";
+import { CardContainer } from "@/components/layout";
 import { FIXED_SEQUENCE, MAX_ERRORS, TICK_MS, TOTAL } from "./constants";
+import { Stats } from "@/types/types";
+import { useGameContext } from "@/context/GameContext";
+import { Button } from "@/components/ui";
 
 type Props = {
   onGameOver: (result: Stats) => void;
