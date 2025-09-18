@@ -1,17 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 import { Input } from "../../../../components/ui/input";
 import { Button } from "../../../../components/ui/button";
+import { useGame } from "@/context/GameContext";
 
 type Props = {
   onStart: (name: string) => void;
 };
 
 export function WelcomePage({ onStart }: Props) {
-  const [name, setName] = useState("");
-  const isInvalid = name.length > 0 && name.length < 3;
+  const { username, setUsername } = useGame();
+  const isInvalid = username.length > 0 && username.length < 3;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[85vh] px-4 pt-40 gap-6">
@@ -63,8 +63,8 @@ export function WelcomePage({ onStart }: Props) {
           required
           minLength={4}
           placeholder="Enter your name here"
-          value={name}
-          onChange={(e) => setName(e.target.value.trim())}
+          value={username}
+          onChange={(e) => setUsername(e.target.value.trim())}
         />
         {isInvalid && (
           <p className="text-xs text-red-600">
@@ -74,10 +74,10 @@ export function WelcomePage({ onStart }: Props) {
       </div>
 
       <Button
-        onClick={() => onStart(name)}
+        onClick={() => onStart(username)}
         size="lg"
         variant="warning"
-        disabled={name.length < 3}
+        disabled={username.length < 3}
         aria-label="Start game"
       >
         Start

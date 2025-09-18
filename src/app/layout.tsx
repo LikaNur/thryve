@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "../styles/globals.css";
 import { Navbar, Waves } from "../components";
+import GameProvider from "@/context/GameContext";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -23,11 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${montserrat.className} antialiased`}>
-        <Navbar />
-        <main className="relative  min-h-[85vh] md:min-h-[90vh]">
-          {children}
-        </main>
-        <Waves />
+        <GameProvider>
+          <Navbar />
+          <main className="relative  min-h-[85vh] md:min-h-[90vh]">
+            {children}
+          </main>
+          <Waves />
+        </GameProvider>
       </body>
     </html>
   );

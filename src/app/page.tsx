@@ -3,15 +3,11 @@
 import { useState } from "react";
 import { GameBoard, ResultBoard, WelcomePage } from "./features";
 import { GameSteps } from "../types/types";
-
+import { useGame } from "@/context/GameContext";
 
 export default function HomePage() {
+  const { setUsername, setStats } = useGame();
   const [step, setStep] = useState<GameSteps>("welcome");
-  const [username, setUsername] = useState("");
-  const [result, setResult] = useState<{ correct: number; errors: number }>({
-    correct: 0,
-    errors: 0,
-  });
 
   switch (step) {
     case "welcome":
@@ -26,9 +22,8 @@ export default function HomePage() {
     case "game":
       return (
         <GameBoard
-          username={username}
           onGameOver={(stats) => {
-            setResult(stats);
+            setStats(stats);
             setStep("result");
           }}
         />
@@ -38,9 +33,8 @@ export default function HomePage() {
       return (
         <div>
           <ResultBoard
-            username={username}
-            stats={result}
             onRestart={() => {
+              setStats({correct: 0, errors: 0})
               setStep("game");
             }}
           />

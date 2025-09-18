@@ -1,16 +1,16 @@
 "use client";
 
 import { CardContainer } from "@/components";
-import { Stats } from "@/types/types";
 import { Button } from "../../../../components/ui/button";
+import { useGame } from "@/context/GameContext";
 
 type Props = {
-  username: string;
-  stats: Stats;
   onRestart: () => void;
 };
 
-export function ResultBoard({ username, stats, onRestart }: Props) {
+export function ResultBoard({ onRestart }: Props) {
+  const { username, stats } = useGame();
+
   return (
     <CardContainer>
       <div className="flex flex-col items-center gap-6">

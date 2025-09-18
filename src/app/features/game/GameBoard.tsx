@@ -1,9 +1,10 @@
 "use client";
 
 import { CardContainer } from "@/components";
-import { Stats } from "@/types/types";
 import { Button } from "../../../../components/ui/button";
 import { useEffect, useState } from "react";
+import { useGame } from "@/context/GameContext";
+import { Stats } from "@/types/types";
 
 const FIXED_SEQUENCE: string[] = [
   "A",
@@ -28,14 +29,12 @@ const MAX_ERRORS = 2;
 const TICK_MS = 1500;
 
 type Props = {
-  username: string;
-  onGameOver: (stats: Stats) => void;
+  onGameOver: (result: Stats) => void;
 };
 
-export function GameBoard({ username, onGameOver }: Props) {
+export function GameBoard({ onGameOver }: Props) {
+  const { username, stats, setStats } = useGame();
   const [index, setIndex] = useState(0);
-  const [correct, setCorrect] = useState(0);
-  const [errors, setErrors] = useState(0);
   const [hasClicked, setHasClicked] = useState(false);
 
   function handleMatch() {
@@ -43,16 +42,16 @@ export function GameBoard({ username, onGameOver }: Props) {
     if (hasClicked) return;
 
     if (FIXED_SEQUENCE[index] === FIXED_SEQUENCE[index - 2]) {
-      setCorrect((corr) => corr + 1);
+      setStats((prev) => ({ ...prev, correct: prev.correct + 1 }));
     } else {
-      setErrors((err) => err + 1);
+      setStats((prev) => ({ ...prev, errors: prev.errors + 1 }));
     }
     setHasClicked(true);
   }
 
   useEffect(() => {
-    if (errors >= MAX_ERRORS || index >= TOTAL - 1) {
-      onGameOver({ correct, errors });
+    if (stats.errors >= MAX_ERRORS || index >= TOTAL - 1) {
+      onGameOver({ correct: stats.correct, errors: stats.errors });
       return;
     }
 
@@ -62,7 +61,7 @@ export function GameBoard({ username, onGameOver }: Props) {
     }, TICK_MS);
 
     return () => clearTimeout(timer);
-  }, [index, errors, onGameOver, correct]);
+  }, [index, stats.errors, onGameOver, stats.correct]);
 
   return (
     <CardContainer>
@@ -86,7 +85,8 @@ export function GameBoard({ username, onGameOver }: Props) {
         </Button>
 
         <p className="text-sm text-gray-700">
-          Correct: {correct} · Errors: {errors} · Letter {index + 1}/{TOTAL}
+          Correct: {stats.correct} · Errors: {stats.errors} · Letter {index + 1}
+          /{TOTAL}
         </p>
       </div>
     </CardContainer>
