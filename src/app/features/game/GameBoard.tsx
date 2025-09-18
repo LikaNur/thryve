@@ -5,28 +5,7 @@ import { Button } from "../../../../components/ui/button";
 import { useEffect, useState } from "react";
 import { useGame } from "@/context/GameContext";
 import { Stats } from "@/types/types";
-
-const FIXED_SEQUENCE: string[] = [
-  "A",
-  "B",
-  "A",
-  "C",
-  "B",
-  "C",
-  "D",
-  "B",
-  "D",
-  "C",
-  "D",
-  "E",
-  "C",
-  "E",
-  "C",
-];
-
-const TOTAL = FIXED_SEQUENCE.length;
-const MAX_ERRORS = 2;
-const TICK_MS = 1500;
+import { FIXED_SEQUENCE, MAX_ERRORS, TICK_MS, TOTAL } from "./constants";
 
 type Props = {
   onGameOver: (result: Stats) => void;
