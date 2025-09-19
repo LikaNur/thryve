@@ -19,7 +19,7 @@ export default function GamePage() {
   return (
     <SnackbarProvider
       maxSnack={3}
-      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
       autoHideDuration={1000}
       iconVariant={{
         success: "😍",
