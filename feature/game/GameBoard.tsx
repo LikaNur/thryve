@@ -9,6 +9,7 @@ import { Button } from "@/components/ui";
 import { useRouter } from "next/navigation";
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";
+import { useSnackbar } from "notistack";
 
 type Props = {
   onGameOver: (result: Stats) => void;
@@ -19,6 +20,7 @@ export function GameBoard({ onGameOver }: Props) {
   const [index, setIndex] = useState(0);
   const [hasClicked, setHasClicked] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
 
   function handleMatch() {
@@ -26,8 +28,10 @@ export function GameBoard({ onGameOver }: Props) {
 
     if (FIXED_SEQUENCE[index] === FIXED_SEQUENCE[index - 2]) {
       setStats((prev) => ({ ...prev, correct: prev.correct + 1 }));
+      enqueueSnackbar(" You have a match", { variant: "success" });
     } else {
       setStats((prev) => ({ ...prev, errors: prev.errors + 1 }));
+      enqueueSnackbar(" Didn't match", { variant: "error" });
     }
     setHasClicked(true);
   }

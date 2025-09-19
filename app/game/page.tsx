@@ -3,6 +3,7 @@
 import { useGameContext } from "@/context/GameContext";
 import { GameBoard } from "@/feature/game/GameBoard";
 import { useRouter } from "next/navigation";
+import { SnackbarProvider } from "notistack";
 import { useEffect } from "react";
 
 export default function GamePage() {
@@ -16,11 +17,21 @@ export default function GamePage() {
   if (!username) return null;
 
   return (
-    <GameBoard
-      onGameOver={(stats) => {
-        setStats(stats);
-        router.push("/result");
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      autoHideDuration={1000}
+      iconVariant={{
+        success: "😍",
+        error: "😔",
       }}
-    />
+    >
+      <GameBoard
+        onGameOver={(stats) => {
+          setStats(stats);
+          router.push("/result");
+        }}
+      />
+    </SnackbarProvider>
   );
 }
