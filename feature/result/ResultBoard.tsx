@@ -5,9 +5,19 @@ import { Button } from "@/components/ui";
 import { useGameContext } from "@/context/GameContext";
 import { useRouter } from "next/navigation";
 
-export function ResultBoard() {
-  const { username, stats, setStats } = useGameContext();
+type Props = {
+  username: string;
+};
+
+export function ResultBoard({ username }: Props) {
+  const { stats, setStats } = useGameContext();
   const router = useRouter();
+
+  const displayName = username ?? "Guest";
+
+  const saved = username
+    ? JSON.parse(localStorage.getItem(`result:${username}`) ?? "{}")
+    : stats;
 
   return (
     <CardContainer>
@@ -15,15 +25,15 @@ export function ResultBoard() {
         <h2 className="text-2xl font-bold">Game Results</h2>
 
         <p className="text-lg">
-          {stats.correct >= 3 ? "Nice work," : "Nice try,"} <b>{username}</b>!
+          {saved.correct >= 3 ? "Nice work," : "Nice try,"} <b>{username}</b>!
         </p>
 
         <div className="text-center space-y-1">
           <p>
-            ✅ <span className="font-semibold">Correct:</span> {stats.correct}
+            ✅ <span className="font-semibold">Correct:</span> {saved.correct}
           </p>
           <p>
-            ❌ <span className="font-semibold">Errors:</span> {stats.errors}
+            ❌ <span className="font-semibold">Errors:</span> {saved.errors}
           </p>
         </div>
 

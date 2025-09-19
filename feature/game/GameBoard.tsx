@@ -6,6 +6,7 @@ import { FIXED_SEQUENCE, MAX_ERRORS, TICK_MS, TOTAL } from "./constants";
 import { Stats } from "@/types/types";
 import { useGameContext } from "@/context/GameContext";
 import { Button } from "@/components/ui";
+import { useRouter } from "next/navigation";
 
 type Props = {
   onGameOver: (result: Stats) => void;
@@ -16,7 +17,8 @@ export function GameBoard({ onGameOver }: Props) {
   const [index, setIndex] = useState(0);
   const [hasClicked, setHasClicked] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
-
+  const router = useRouter();
+  
   function handleMatch() {
     if (index < 2 || hasClicked || gameFinished) return;
 
@@ -34,6 +36,12 @@ export function GameBoard({ onGameOver }: Props) {
     if (stats.errors >= MAX_ERRORS || index >= TOTAL - 1) {
       setGameFinished(true);
       onGameOver({ correct: stats.correct, errors: stats.errors });
+
+      localStorage.setItem(
+        `result:${username}`,
+        JSON.stringify({ correct: stats.correct, errors: stats.errors })
+      );
+      router.push(`/result/${encodeURIComponent(username)}`);
       return;
     }
 
