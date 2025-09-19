@@ -15,10 +15,10 @@ export function GameBoard({ onGameOver }: Props) {
   const { username, stats, setStats } = useGameContext();
   const [index, setIndex] = useState(0);
   const [hasClicked, setHasClicked] = useState(false);
+  const [gameFinished, setGameFinished] = useState(false);
 
   function handleMatch() {
-    if (index < 2) return;
-    if (hasClicked) return;
+    if (index < 2 || hasClicked || gameFinished) return;
 
     if (FIXED_SEQUENCE[index] === FIXED_SEQUENCE[index - 2]) {
       setStats((prev) => ({ ...prev, correct: prev.correct + 1 }));
@@ -29,7 +29,10 @@ export function GameBoard({ onGameOver }: Props) {
   }
 
   useEffect(() => {
+    if (gameFinished) return;
+
     if (stats.errors >= MAX_ERRORS || index >= TOTAL - 1) {
+      setGameFinished(true);
       onGameOver({ correct: stats.correct, errors: stats.errors });
       return;
     }
@@ -40,7 +43,7 @@ export function GameBoard({ onGameOver }: Props) {
     }, TICK_MS);
 
     return () => clearTimeout(timer);
-  }, [index, stats.errors, onGameOver, stats.correct]);
+  }, [index, stats.errors, gameFinished, stats.correct, onGameOver]);
 
   return (
     <CardContainer>

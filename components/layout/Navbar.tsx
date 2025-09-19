@@ -10,17 +10,18 @@ export function Navbar() {
         </h2>
       </div>
 
-      <Link href="/">
-        <Image
-          src="/logo.png"
-          alt="Thryve Logo"
-          draggable={false}
-          width={160}
-          height={40}
-          priority
-          className="py-3"
-        />
-      </Link>
+      <div className="flex py-3">
+        <Link href="/">
+          <Image
+            src="/logo.png"
+            alt="Thryve Logo"
+            draggable={false}
+            width={160}
+            height={40}
+            priority
+          />
+        </Link>
+      </div>
     </nav>
   );
 }

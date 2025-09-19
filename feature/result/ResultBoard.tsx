@@ -3,13 +3,11 @@
 import { CardContainer } from "@/components/layout";
 import { Button } from "@/components/ui";
 import { useGameContext } from "@/context/GameContext";
+import { useRouter } from "next/navigation";
 
-type Props = {
-  onRestart: () => void;
-};
-
-export function ResultBoard({ onRestart }: Props) {
-  const { username, stats } = useGameContext();
+export function ResultBoard() {
+  const { username, stats, setStats } = useGameContext();
+  const router = useRouter();
 
   return (
     <CardContainer>
@@ -30,7 +28,10 @@ export function ResultBoard({ onRestart }: Props) {
         </div>
 
         <Button
-          onClick={onRestart}
+          onClick={() => {
+            router.push("/game");
+            setStats({ correct: 0, errors: 0 });
+          }}
           size="lg"
           variant="outline"
           aria-label="Play again"
