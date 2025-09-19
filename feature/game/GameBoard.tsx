@@ -7,6 +7,8 @@ import { Stats } from "@/types/types";
 import { useGameContext } from "@/context/GameContext";
 import { Button } from "@/components/ui";
 import { useRouter } from "next/navigation";
+import * as motion from "motion/react-client";
+import { AnimatePresence } from "motion/react";
 
 type Props = {
   onGameOver: (result: Stats) => void;
@@ -18,7 +20,7 @@ export function GameBoard({ onGameOver }: Props) {
   const [hasClicked, setHasClicked] = useState(false);
   const [gameFinished, setGameFinished] = useState(false);
   const router = useRouter();
-  
+
   function handleMatch() {
     if (index < 2 || hasClicked || gameFinished) return;
 
@@ -51,7 +53,15 @@ export function GameBoard({ onGameOver }: Props) {
     }, TICK_MS);
 
     return () => clearTimeout(timer);
-  }, [index, stats.errors, gameFinished, stats.correct, onGameOver, username, router]);
+  }, [
+    index,
+    stats.errors,
+    gameFinished,
+    stats.correct,
+    onGameOver,
+    username,
+    router,
+  ]);
 
   return (
     <CardContainer>
@@ -60,9 +70,20 @@ export function GameBoard({ onGameOver }: Props) {
           Good luck, <b>{username}</b>!
         </h2>
 
-        <div className="text-6xl font-black h-20 flex items-center">
-          {FIXED_SEQUENCE[index]}
-        </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            className="text-6xl font-black h-20 flex items-center"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.4,
+              scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+            }}
+          >
+            {FIXED_SEQUENCE[index]}
+          </motion.div>
+        </AnimatePresence>
 
         <Button
           onClick={handleMatch}
@@ -70,11 +91,12 @@ export function GameBoard({ onGameOver }: Props) {
           variant="outline"
           aria-label="Match letters"
           disabled={hasClicked || index < 2}
+          className="dark:border-white dark:hover:bg-[#a284e8] dark:bg-[#8A69D5]"
         >
           Match
         </Button>
 
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-gray-700 dark:text-white">
           Correct: {stats.correct} · Errors: {stats.errors} · Letter {index + 1}
           /{TOTAL}
         </p>

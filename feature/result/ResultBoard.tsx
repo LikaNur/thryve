@@ -43,6 +43,7 @@ export function ResultBoard({ username }: Props) {
           size="lg"
           variant="outline"
           aria-label="Play again"
+          className="dark:border-white dark:hover:bg-[#a284e8] dark:bg-[#8A69D5]"
         >
           Play Again
         </Button>

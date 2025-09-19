@@ -3,6 +3,7 @@ import { Montserrat } from "next/font/google";
 import "../styles/globals.css";
 import GameProvider from "../context/GameContext";
 import { Navbar, Waves } from "@/components/layout";
+import { ThemeProvider } from "next-themes";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -22,17 +23,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${montserrat.className} antialiased`}>
-        <GameProvider>
-          <Navbar />
-          <div className="flex flex-col min-h-screen">
-            <main className="flex-1">
-              {children}
-            </main>
-            <Waves />
-          </div>
-        </GameProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          disableTransitionOnChange
+        >
+          <GameProvider>
+            <Navbar />
+            <div className="flex flex-col min-h-screen dark:bg-[#181717]">
+              <main className="flex-1">{children}</main>
+              <Waves />
+            </div>
+          </GameProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
