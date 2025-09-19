@@ -13,8 +13,6 @@ export function ResultBoard({ username }: Props) {
   const { stats, setStats } = useGameContext();
   const router = useRouter();
 
-  const displayName = username ?? "Guest";
-
   const saved = username
     ? JSON.parse(localStorage.getItem(`result:${username}`) ?? "{}")
     : stats;

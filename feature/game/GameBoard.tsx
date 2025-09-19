@@ -51,7 +51,7 @@ export function GameBoard({ onGameOver }: Props) {
     }, TICK_MS);
 
     return () => clearTimeout(timer);
-  }, [index, stats.errors, gameFinished, stats.correct, onGameOver]);
+  }, [index, stats.errors, gameFinished, stats.correct, onGameOver, username, router]);
 
   return (
     <CardContainer>
