@@ -1,4 +1,4 @@
-# Thryve 2-Back Game
+## Thryve 2-Back Game
 
 A small **Next.js** memory game where the player enters their name and plays a
 classic **2-back task**.  
@@ -15,8 +15,11 @@ At the end the player sees their **correct guesses** and **errors**.
   The game stops automatically after:
   - **2 errors**, or
   - all **15 letters** are shown.
-- **Responsive UI**  
-  Built with **Next.js + TailwindCSS + shadcn/ui** components.
+- **Main tools**  
+  Built with Next.js, TailwindCSS, and shadcn/ui components.
+  Letters appear with motion animations. Data is persisted via localStorage, and navigation uses the useParams hook.
+  Tested end-to-end with Playwright. 
+  Global state is managed with React Context API. 
 - **Simple State Flow**  
   - **Welcome Page** → player enters a name  
   - **Game Board** → letters cycle automatically  
